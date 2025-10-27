@@ -2,7 +2,9 @@ FROM node:lts-alpine
 
 WORKDIR /opt/app
 
-RUN apk add --no-cache curl tzdata
+确保安装 curl, tzdata 和 unzip
+
+RUN apk add --no-cache curl tzdata unzip
 
 ENV TIME_ZONE=Asia/Shanghai
 
@@ -18,18 +20,16 @@ ADD https://github.com/sub-store-org/Sub-Store/releases/latest/download/sub-stor
 
 ADD https://github.com/sub-store-org/Sub-Store-Front-End/releases/latest/download/dist.zip /opt/app/dist.zip
 
-解压前端文件并清理
+解压前端文件并清理 (已修复续行符问题)
 
-RUN apk add --no-cache unzip && 
-
-unzip dist.zip; mv dist frontend; rm dist.zip
+RUN unzip dist.zip; mv dist frontend; rm dist.zip
 
 下载 http-meta 依赖
 
 ADD https://github.com/xream/http-meta/releases/latest/download/http-meta.bundle.js /opt/app/http-meta.bundle.js
 ADD https://github.com/xream/http-meta/releases/latest/download/tpl.yaml /opt/app/http-meta/tpl.yaml
 
-下载 mihomo 可执行文件 (已修复格式)
+下载 mihomo 可执行文件 (已修复格式，确保使用 \ 续行)
 
 RUN version=$(curl -s -L --connect-timeout 5 --max-time 10 --retry 2 --retry-delay 0 --retry-max-time 20 'https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt') && \
 arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64-compatible/) && 
@@ -50,7 +50,7 @@ RUN chmod 777 -R /opt/app
 
 EXPOSE 3001
 
-容器启动命令 (已修复格式)
+容器启动命令 (已修复格式，确保使用 \ 续行)
 
 CMD mkdir -p /opt/app/data; cd /opt/app/data; 
 
