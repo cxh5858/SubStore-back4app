@@ -20,7 +20,7 @@ ADD https://github.com/sub-store-org/Sub-Store/releases/latest/download/sub-stor
 
 ADD https://github.com/sub-store-org/Sub-Store-Front-End/releases/latest/download/dist.zip /opt/app/dist.zip
 
-解压前端文件并清理 (已修复续行符问题)
+解压前端文件并清理
 
 RUN unzip dist.zip; mv dist frontend; rm dist.zip
 
@@ -29,7 +29,7 @@ RUN unzip dist.zip; mv dist frontend; rm dist.zip
 ADD https://github.com/xream/http-meta/releases/latest/download/http-meta.bundle.js /opt/app/http-meta.bundle.js
 ADD https://github.com/xream/http-meta/releases/latest/download/tpl.yaml /opt/app/http-meta/tpl.yaml
 
-下载 mihomo 可执行文件 (已修复格式，确保使用 \ 续行)
+下载 mihomo 可执行文件 (已修复格式，使用反斜杠 \ 续行)
 
 RUN version=$(curl -s -L --connect-timeout 5 --max-time 10 --retry 2 --retry-delay 0 --retry-max-time 20 'https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt') && \
 arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64-compatible/) && 
@@ -46,11 +46,11 @@ rm -rf /opt/app/http-meta/http-meta.gz
 
 RUN chmod 777 -R /opt/app
 
-暴露端口 (修复上一个错误)
+暴露端口
 
 EXPOSE 3001
 
-容器启动命令 (已修复格式，确保使用 \ 续行)
+容器启动命令 (已修复格式，使用反斜杠 \ 续行)
 
 CMD mkdir -p /opt/app/data; cd /opt/app/data; 
 
